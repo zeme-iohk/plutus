@@ -60,7 +60,7 @@ cabal clean
 echo "[ci-plutus-benchmark]: Running benchmark for base branch at $BASE_BRANCH_REF ..."
 cabal bench $BENCHMARK_NAME >bench-base.log 2>&1
 git checkout "$PR_BRANCH_REF"  # .. so we use the most recent version of the comparison script
-
+exit 1
 echo "[ci-plutus-benchmark]: Comparing results ..."
 {
 # The blank line is important, otherwise Github doesn't render markdown in the body of the details element.

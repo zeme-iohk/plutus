@@ -5,7 +5,7 @@ on:
 
 jobs:
   benchmark:
-    runs-on: [self-hosted, plutus-benchmark]
+    runs-on: ubuntu-latest
     
     permissions:
       pull-requests: write
@@ -42,11 +42,47 @@ jobs:
             else
               core.setFailed(`Unable to extract benchmark name from {comment}`);
 
+
       - name: Extract Comment Branch 
-        uses: xt0rted/pull-request-comment-branch@v1.4.0
         id: extract-branch
+        uses: actions/github-script@v6
         with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            function isPullRequest() {
+              const result = github.rest.issues.get({
+                ...context.repo,
+                issue_number: context.issue.number
+              });
+              return !!result.data.pull_request;
+            }
+
+            function getCommentHeadRef() {
+              const query = `
+                query pullRequestDetails($repo:String!, $owner:String!, $number:Int!) {
+                  repository(name: $repo, owner: $owner) {
+                    pullRequest(number: $number) {
+                      headRef {
+                        name
+                      }
+                    }
+                  }
+                }`;
+
+              const result = github.graphql(query, {
+                ...context.repo,
+                number: context.issue.number
+              });
+
+              return result.repository.pullRequest.headRef.name;
+            }
+
+            try {
+              if (!isPullRequest())
+                core.setFailed("Comment is not on a pull request");
+              else 
+                core.setOutput("head_ref", getCommentHeadRef());
+            } catch (error) 
+              core.setFailed(`Error: {error}`);
 
       - run: |
          nix develop --no-warn-dirty --accept-flake-config --command bash ./scripts/ci-plutus-benchmark.sh 

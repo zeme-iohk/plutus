@@ -34,12 +34,12 @@ jobs:
             {
                 "name": "My Custom Smaller Is Better Benchmark - CPU Load",
                 "unit": "Percent",
-                "value": ${{ inputs.cpu-value }}
+                "value": 2
             },
             {
                 "name": "My Custom Smaller Is Better Benchmark - Memory Used",
                 "unit": "Megabytes",
-                "value": ${{ inputs.memory-value }},
+                "value": 2,
                 "range": "3",
                 "extra": "Value for Tooltip: 25\nOptional Num #2: 100\nAnything Else!"
             }
@@ -64,7 +64,7 @@ jobs:
           # Workflow will fail when an alert happens
           fail-on-alert: true
           # Push and deploy GitHub pages branch automatically
-          auto-push: true
+          auto-push: false
           # gh-pages-branch: gh-pages
           # gh-repository: input-output-hk/plutus
           # benchmark-data-dir-path: dev/bench

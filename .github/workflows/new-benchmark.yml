@@ -1,0 +1,74 @@
+name: New Benchmark
+
+on:
+  workflow_dispatch:
+    inputs: 
+      cpu-value:
+        type: string 
+        required: true
+      memory-value:
+        type: string 
+        required: true
+  push:
+    branches:
+      - master
+
+permissions:
+  # Deployments permission to deploy GitHub pages website
+  deployments: write
+  # Contents permission to update benchmark contents in gh-pages branch
+  contents: write
+
+jobs:
+  new-benchmark:
+    name: Performance regression check
+    runs-on: [self-hosted, plutus-benchmark]
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Run benchmark
+        run: | 
+          # TODO run the actual benchmarks
+          cat << EOF> ./output.json 
+          [
+            {
+                "name": "My Custom Smaller Is Better Benchmark - CPU Load",
+                "unit": "Percent",
+                "value": ${{ inputs.cpu-value }}
+            },
+            {
+                "name": "My Custom Smaller Is Better Benchmark - Memory Used",
+                "unit": "Megabytes",
+                "value": ${{ inputs.memory-value }},
+                "range": "3",
+                "extra": "Value for Tooltip: 25\nOptional Num #2: 100\nAnything Else!"
+            }
+          ]
+          EOF
+          
+      - name: Download previous benchmark data
+        uses: actions/cache@v1
+        with:
+          path: ./cache
+          key: ${{ runner.os }}-benchmark
+
+      - name: Store benchmark result
+        uses: benchmark-action/github-action-benchmark@v1
+        with:
+          name: My Project Go Benchmark
+          tool: 'customSmallerIsBetter'
+          output-file-path: output.json
+          # Where the previous data file is stored
+          external-data-json-path: ./cache/benchmark-data.json
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          # Workflow will fail when an alert happens
+          fail-on-alert: true
+          # Push and deploy GitHub pages branch automatically
+          auto-push: true
+          # gh-pages-branch: gh-pages
+          # gh-repository: input-output-hk/plutus
+          # benchmark-data-dir-path: dev/bench
+          # Enable alert commit comment
+          comment-on-alert: true
+          # Mention @rhysd in the commit comment
+          alert-comment-cc-users: '@zeme-iohk'

@@ -22,7 +22,7 @@ permissions:
 jobs:
   new-benchmark:
     name: Performance regression check
-    runs-on: [self-hosted, plutus-benchmark]
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
 

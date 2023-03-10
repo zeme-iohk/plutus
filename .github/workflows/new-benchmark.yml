@@ -59,12 +59,12 @@ jobs:
           tool: 'customSmallerIsBetter'
           output-file-path: output.json
           # Where the previous data file is stored
-          external-data-json-path: ./cache/benchmark-data.json
+          # external-data-json-path: ./cache/benchmark-data.json
           github-token: ${{ secrets.GITHUB_TOKEN }}
           # Workflow will fail when an alert happens
           fail-on-alert: true
           # Push and deploy GitHub pages branch automatically
-          auto-push: false
+          auto-push: true
           # gh-pages-branch: gh-pages
           # gh-repository: input-output-hk/plutus
           # benchmark-data-dir-path: dev/bench

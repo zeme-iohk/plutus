@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1678432082012,
+  "lastUpdate": 1678432445437,
   "repoUrl": "https://github.com/zeme-iohk/plutus",
   "entries": {
     "My Project Go Benchmark": [
@@ -67,6 +67,40 @@ window.BENCHMARK_DATA = {
             "value": 2,
             "unit": "Megabytes",
             "range": "6",
+            "extra": "Value for Tooltip: 25\nOptional Num #2: 100\nAnything Else!"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "zem1@pm.me",
+            "name": "zeme"
+          },
+          "committer": {
+            "email": "zem1@pm.me",
+            "name": "zeme"
+          },
+          "distinct": true,
+          "id": "83e504b719061e39e018a47b4647420c6a5f6bf1",
+          "message": "Workflow benchmark",
+          "timestamp": "2023-03-10T14:13:21+07:00",
+          "tree_id": "794c3b32973ca62333b5335b6d6f1d3875a18a54",
+          "url": "https://github.com/zeme-iohk/plutus/commit/83e504b719061e39e018a47b4647420c6a5f6bf1"
+        },
+        "date": 1678432415715,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "My Custom Smaller Is Better Benchmark - CPU Load",
+            "value": 8,
+            "unit": "Percent"
+          },
+          {
+            "name": "My Custom Smaller Is Better Benchmark - Memory Used",
+            "value": 5,
+            "unit": "Megabytes",
+            "range": "3",
             "extra": "Value for Tooltip: 25\nOptional Num #2: 100\nAnything Else!"
           }
         ]
